@@ -19,7 +19,7 @@ def main():
     filenames = ["J:\\My Dropbox\\Open Source Projects\\MKS_Data\\results44494_001\\ops\\QA-FARMF.1.user1.timings.csv",
                  "J:\\My Dropbox\\Open Source Projects\\MKS_Data\\results44494_001\\ops\\QA-FARMF.2.user2.timings.csv"]
     g.createGroup(filenames)
-    g.sort('Timestamp')
+    #g.sort('Timestamp')
 
 if __name__ == '__main__':
     main()

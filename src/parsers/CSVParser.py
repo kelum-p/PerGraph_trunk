@@ -38,6 +38,22 @@ class CSVParser(object):
         reader = csv.reader(self.csvFile)
         self._headings = reader.next()
         
+        # Remove empty strings
+        while True:
+            try:
+                self._headings.remove('')
+            except ValueError:
+                break
+        
+        # Grab the first row of data to figure out if the data is alpha or numeric
+        self._headingType = []
+        data = reader.next()
+        for item in data:
+            if item.isdigit() == True:
+                self._headingType.append("LONG")
+            else:
+                self._headingType.append("TEXT")
+            
         self.csvFile.seek(0)
     
     # @param heading: Used to grab the data relevant to the heading
@@ -61,20 +77,6 @@ class CSVParser(object):
         
         return data
     
-    def getDataByRow(self, row):        
-        reader = csv.reader(self.csvFile)
-        reader.next() # skip the heading
-        
-        currRow = 0
-        
-        for row in reader:
-            if currRow == row:
-                return row
-            
-            currRow += 1
-        
-        return None
-    
     # @param None
     # @return: Returns the number of lines in the file
     def getNumEntries(self):
@@ -96,6 +98,10 @@ class CSVParser(object):
     # @return: return a list of headings
     def getHeadings(self):
         return self._headings
+    
+    def getHeadingType(self,heading):
+        idx = self._headings.index(heading)
+        return self._headingType[idx]
     
         
         
